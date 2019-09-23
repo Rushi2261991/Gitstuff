@@ -18,5 +18,11 @@ public class SeleniumTest {
 	public void git() {
 		System.out.println("element UI");
 	}
+	
+	@Test
+	public void git1() {
+		System.out.println("element UI");
+	}
+	
 }
 
