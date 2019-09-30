@@ -2,6 +2,7 @@ package Selenium;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -11,7 +12,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelDataDriven {
 	
-	public static void main(String[] args) throws Exception {
+	public ArrayList<String> getData(String testCasename) throws Exception {
+		
+		ArrayList<String> a = new ArrayList<String>();
 		
 		FileInputStream fis = new FileInputStream("E:\\softwares\\Work\\demodata.xlsx");
 		XSSFWorkbook workbook = new XSSFWorkbook(fis);
@@ -36,14 +39,27 @@ public class ExcelDataDriven {
 				
 				while(ce.hasNext()) {
 					Cell value = ce.next();
-					if(value.getStringCellValue().equalsIgnoreCase("password")) {
+					if(value.getStringCellValue().equalsIgnoreCase("Testcases")) {
 						
 						column = k;
-				
 					}
 					k++;
 				}
 				System.out.println(column);
+				
+				while(rows.hasNext()) {
+					Row r = rows.next();
+					if(r.getCell(column).getStringCellValue().equalsIgnoreCase(testCasename)) {
+						Iterator <Cell> cv =r.cellIterator();
+						while(cv.hasNext()) {
+							a.add(cv.next().getStringCellValue());
+							//Store this data in array
+						}
+					}
+					
+				}
+				
+				
 				
 				
 				
@@ -54,6 +70,7 @@ public class ExcelDataDriven {
 			
 		}
 		
+		return a;
 		
 	}
 
